@@ -28,9 +28,20 @@ import android.support.v7.widget.Toolbar;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.InMemoryDemoExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.DatabaseHelper;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.PersistentAccountDAO;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 
 public class MainActivity extends AppCompatActivity {
     private ExpenseManager expenseManager;
+    DatabaseHelper myDb ;
+    /*PersistentAccountDAO acc;
+    Account ac;*/
+
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -65,8 +76,20 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         /***  Begin generating dummy data for In-Memory implementation  ***/
-        expenseManager = new InMemoryDemoExpenseManager();
+        myDb = new DatabaseHelper(this);
+
+        expenseManager = new PersistentExpenseManager(myDb);
+
         /*** END ***/
+
+        //acc= new PersistentAccountDAO(myDb);
+        //ac= new Account("12345A","abc","Nethmini",1000);
+        //acc.addAccount(ac);
+
+        //System.out.println(acc.getAccountNumbersList());
+
+
+
     }
 
     /**
